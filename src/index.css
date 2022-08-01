@@ -1,15 +1,70 @@
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
 canvas {
   display: block;
+}
+
+#root {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Style the header */
+.header {
+  grid-area: header;
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+}
+
+/* The grid container */
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "header header header header header header"
+    "left middle middle middle middle middle";
+  grid-column-gap: 10px;
+  padding-bottom: 2.5rem;
+}
+
+.left,
+.middle {
+  padding: 10px;
+  height: 600px; /* Should be removed. Only for demonstration */
+}
+
+/* Style the left column */
+.left {
+  grid-area: left;
+}
+
+/* Style the middle column */
+.middle {
+  grid-area: middle;
+}
+
+/* Style the footer */
+.footer {
+  background-color: #f1f1f1;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
