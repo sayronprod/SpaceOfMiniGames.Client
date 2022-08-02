@@ -1,23 +1,21 @@
-import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Layout from "./pages/Layout ";
+import NoPage from "./pages/NoPage";
+import Games from "./pages/Games";
 
 function App() {
   return (
-    <div className="grid-container">
-      <div className="header">
-        <h2>Header</h2>
-      </div>
-
-      <div className="left" style={{ backgroundColor: "lightblue" }}>
-        Column
-      </div>
-      <div className="middle" style={{ backgroundColor: "red" }}>
-        Column
-      </div>
-
-      <div className="footer">
-        <p>Footer</p>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="Games" element={<Games />} />
+          {/* <Route path="contact" element={<Contact />} />  */}
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

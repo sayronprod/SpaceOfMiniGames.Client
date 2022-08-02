@@ -1,0 +1,44 @@
+/* Style the header */
+.header {
+  grid-area: header;
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+/* The grid container */
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "header header header header header header"
+    "left middle middle middle middle middle";
+  grid-template-rows: auto 95%;
+  height: 100vh;
+}
+
+.left,
+.middle {
+  margin: 5px;
+  min-height: 540px;
+}
+
+/* Style the left column */
+.left {
+  grid-area: left;
+  min-width: 250px;
+}
+
+/* Style the middle column */
+.middle {
+  grid-area: middle;
+  min-width: 600px;
+}
+
+.chat {
+  height: 50%;
+  background-color: blue;
+}
+
+.room {
+  height: 50%;
+  background-color: darkred;
+}
