@@ -1,13 +1,13 @@
-interface IUserLoginData {
+interface UserLoginData {
   login: string;
   password: string;
 }
 
-interface ITokenInfo {
-  Token: string | null;
-  Expired: Date | null;
+interface TokenInfo {
+  token: string | null;
+  expired: string | null;
 }
 
-interface IError {
-  Message: string | null;
+interface ApiError {
+  message: string | null;
 }

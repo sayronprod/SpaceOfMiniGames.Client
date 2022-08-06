@@ -1,7 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { BaseApiUrl } from "../global";
 import "./Login.css";
 
 const Login = () => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSuccessLogin, setIsSuccessLogin] = useState(false);
+  let navigate = useNavigate();
+
   const renderErrorMessage = (message: string | null | undefined) => (
     <div className="error">{message}</div>
   );
@@ -14,7 +20,24 @@ const Login = () => {
       login: userName.value,
       password: password.value,
     };
-    //request
+    fetch(`${BaseApiUrl}/Token`, {
+      method: "POST",
+      body: JSON.stringify(loginData),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data.token != null) {
+          const tokenInfo = data as TokenInfo;
+          localStorage.setItem("token", JSON.stringify(tokenInfo));
+          navigate("/");
+        } else {
+          const error: ApiError = data as ApiError;
+          setErrorMessage(error.message!);
+        }
+      });
   };
 
   const renderForm = (
@@ -28,7 +51,7 @@ const Login = () => {
           <label>Password </label>
           <input type="password" name="password" required />
         </div>
-        {/* {renderErrorMessage(state.error?.Message)} */}
+        {renderErrorMessage(errorMessage)}
         <div className="button-container">
           <input type="submit" value="Login" />
         </div>
