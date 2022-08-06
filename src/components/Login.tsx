@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "../app/hooks";
 import { BaseApiUrl } from "../global";
 import "./Login.css";
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const [isSuccessLogin, setIsSuccessLogin] = useState(false);
+  const [tokenData, setTokenData] = useLocalStorage("token", null);
   let navigate = useNavigate();
 
   const renderErrorMessage = (message: string | null | undefined) => (
@@ -31,7 +32,8 @@ const Login = () => {
       .then((data) => {
         if (data.token != null) {
           const tokenInfo = data as TokenInfo;
-          localStorage.setItem("token", JSON.stringify(tokenInfo));
+          setTokenData(tokenInfo);
+          window.dispatchEvent(new Event("storage"));
           navigate("/");
         } else {
           const error: ApiError = data as ApiError;

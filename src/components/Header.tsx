@@ -1,31 +1,37 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useLocalStorage } from "../app/hooks";
 import "./Header.css";
 
 const Header = () => {
-  const tokenData = localStorage.getItem("token");
-  let isValidToken = false;
+  const [tokenData, setTokenData] = useLocalStorage("token", null);
 
   const checkToken = () => {
-    if (tokenData != null) {
-      let tokenInfo: TokenInfo | null = null;
-      try {
-        tokenInfo = JSON.parse(tokenData);
-      } catch {}
-      console.log(Date.parse(tokenInfo!.expired!) > new Date().valueOf());
+    let tokenObj;
+    try {
+      const item = localStorage.getItem("token");
+      tokenObj = item ? JSON.parse(item) : null;
+    } catch {
+      tokenObj = null;
+    }
+    let tokenInfo: TokenInfo | null = tokenObj as TokenInfo;
+    if (tokenInfo != null) {
       if (tokenInfo != null) {
         if (Date.parse(tokenInfo.expired!) > new Date().valueOf()) {
-          isValidToken = true;
+          return true;
         }
       }
     }
+    return false;
   };
 
-  checkToken();
+  const [isValidToken, setIsValidToken] = useState(() => checkToken());
 
   useEffect(() => {
-    checkToken();
-  });
+    window.addEventListener("storage", () => {
+      setIsValidToken(checkToken());
+    });
+  }, []);
 
   return (
     <div className="navbar">
@@ -44,8 +50,8 @@ const Header = () => {
             <li
               className="right-li"
               onClick={() => {
-                localStorage.removeItem("token");
-                isValidToken = false;
+                setTokenData(null);
+                setIsValidToken(false);
               }}
             >
               <Link to="/">Sign Out</Link>
