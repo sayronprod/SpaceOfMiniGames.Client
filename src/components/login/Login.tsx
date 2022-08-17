@@ -1,46 +1,32 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from "../app/hooks";
-import { BaseApiUrl } from "../global";
+import { useAppSelector } from "../../hooks/redux";
 import "./Login.css";
+import { useAppDispatch } from "./../../hooks/redux";
+import { loginUser } from "./../../store/actions/token";
+import { useEffect } from "react";
 
 const Login = () => {
-  const [errorMessage, setErrorMessage] = useState("");
-  const [tokenData, setTokenData] = useLocalStorage("token", null);
-  let navigate = useNavigate();
-
-  const renderErrorMessage = (message: string | null | undefined) => (
-    <div className="error">{message}</div>
+  const { userToken, error, isLoading } = useAppSelector(
+    (state) => state.tokenReducer
   );
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const { userName, password } = document.forms[0];
     const loginData = {
       login: userName.value,
       password: password.value,
     };
-    fetch(`${BaseApiUrl}/Token`, {
-      method: "POST",
-      body: JSON.stringify(loginData),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        if (data.token != null) {
-          const tokenInfo = data as TokenInfo;
-          setTokenData(tokenInfo);
-          window.dispatchEvent(new Event("storage"));
-          navigate("/");
-        } else {
-          const error: ApiError = data as ApiError;
-          setErrorMessage(error.message!);
-        }
-      });
+    dispatch(loginUser(loginData.login, loginData.password));
   };
+
+  useEffect(() => {
+    if (userToken) {
+      navigate("/");
+    }
+  });
 
   const renderForm = (
     <div className="form">
@@ -53,7 +39,7 @@ const Login = () => {
           <label>Password </label>
           <input type="password" name="password" required />
         </div>
-        {renderErrorMessage(errorMessage)}
+        {error ?? <div className="error">{error}</div>}
         <div className="button-container">
           <input type="submit" value="Login" />
         </div>

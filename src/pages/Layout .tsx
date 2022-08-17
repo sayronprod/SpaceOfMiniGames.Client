@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import Chat from "../components/Chat";
-import Header from "../components/Header";
-import Room from "../components/Room";
+import Chat from "../components/chat/Chat";
+import Header from "../components/header/Header";
+import Room from "../components/room/Room";
 import "./Layout.css";
 
 const Layout = () => {
