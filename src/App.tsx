@@ -14,11 +14,11 @@ const store = setupStore();
 store.subscribe(() => {
   localStorage.setItem(
     "userToken",
-    JSON.stringify(store.getState().tokenReducer.userToken)
+    JSON.stringify(store.getState().userReducer.userToken)
   );
   localStorage.setItem(
     "userInfo",
-    JSON.stringify(store.getState().tokenReducer.userInfo)
+    JSON.stringify(store.getState().userReducer.userInfo)
   );
 });
 

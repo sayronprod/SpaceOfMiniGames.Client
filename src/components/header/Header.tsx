@@ -3,12 +3,12 @@ import { useAppSelector } from "../../hooks/redux";
 import "./Header.css";
 import { checkToken } from "./../../helpers/tokenHelper";
 import { useAppDispatch } from "./../../hooks/redux";
-import { tokenSlice } from "./../../store/reducers/TokenSlice";
+import { userSlice } from "../../store/reducers/UserSlice";
 
 const Header = () => {
-  const { userToken } = useAppSelector((state) => state.tokenReducer);
+  const { userToken } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
-  const { clearToken } = tokenSlice.actions;
+  const { clearToken } = userSlice.actions;
 
   return (
     <div className="navbar">

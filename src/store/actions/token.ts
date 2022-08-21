@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BaseApiUrl } from "../../global";
 import { AppDispatch } from "../store";
-import { tokenSlice } from "./../reducers/TokenSlice";
+import { userSlice } from "../reducers/UserSlice";
 
 export const loginUser =
   (login: string, password: string) => async (dispatch: AppDispatch) => {
@@ -10,23 +10,53 @@ export const loginUser =
         login,
         password,
       };
-      dispatch(tokenSlice.actions.loginUserStarting());
+      dispatch(userSlice.actions.loginUserStarting());
 
       const response = await axios.post<IUserLoginResponse>(
         `${BaseApiUrl}/Token`,
         body
       );
       if (response.data.isSuccess) {
-        dispatch(tokenSlice.actions.loginUserEnd(response.data));
+        dispatch(userSlice.actions.loginUserEnd(response.data));
       } else {
-        dispatch(tokenSlice.actions.loginUserError(response.data.message));
+        dispatch(userSlice.actions.loginUserError(response.data.message));
       }
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        dispatch(tokenSlice.actions.loginUserError(e.message));
+        dispatch(userSlice.actions.loginUserError(e.message));
       } else {
         dispatch(
-          tokenSlice.actions.loginUserError("An unexpected error occurred")
+          userSlice.actions.loginUserError("An unexpected error occurred")
+        );
+        console.log(e);
+      }
+    }
+  };
+
+export const registerUser =
+  (login: string, password: string) => async (dispatch: AppDispatch) => {
+    try {
+      const body: IUserRegisterRequest = {
+        login,
+        password,
+      };
+      dispatch(userSlice.actions.registerUserStarting());
+
+      const response = await axios.post<IUserRegisterResponse>(
+        `${BaseApiUrl}/User/Register`,
+        body
+      );
+      if (response.data.isSuccess) {
+        dispatch(userSlice.actions.registerUserEnd(response.data));
+      } else {
+        dispatch(userSlice.actions.registerUserError(response.data.message));
+      }
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        dispatch(userSlice.actions.registerUserError(e.message));
+      } else {
+        dispatch(
+          userSlice.actions.registerUserError("An unexpected error occurred")
         );
         console.log(e);
       }

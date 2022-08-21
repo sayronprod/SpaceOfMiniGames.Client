@@ -1,20 +1,21 @@
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../hooks/redux";
-import "./Login.css";
-import { useAppDispatch } from "./../../hooks/redux";
-import { loginUser } from "./../../store/actions/token";
-import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { registerUser } from "../../store/actions/token";
+import "./Register.css";
 
-const Login = () => {
+const Register = () => {
   const { userToken, error, isLoading } = useAppSelector(
     (state) => state.userReducer
   );
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [userNameValidationError, setUserNameValidationError] = useState("");
   const [passwordValidationError, setPasswordValidationError] = useState("");
+  const [passwordConfirmError, setPasswordConfirmError] = useState("");
 
   const [formValidationResult, setFormValidationResult] = useState(false);
 
@@ -23,7 +24,7 @@ const Login = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(loginUser(userName, password));
+    dispatch(registerUser(userName, password));
   };
 
   const handleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +33,12 @@ const Login = () => {
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+  };
+
+  const handleChangeConfirmPassword = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmPassword(e.target.value);
   };
 
   const validateForm = () => {
@@ -55,6 +62,16 @@ const Login = () => {
       setPasswordValidationError("");
     }
 
+    if (confirmPassword != "" && confirmPassword != password) {
+      result = false;
+      setPasswordConfirmError("Passwords do not match");
+    } else if (confirmPassword == "") {
+      result = false;
+      setPasswordConfirmError("");
+    } else {
+      setPasswordConfirmError("");
+    }
+
     setFormValidationResult(result);
   };
 
@@ -66,20 +83,20 @@ const Login = () => {
 
   useEffect(() => {
     validateForm();
-  }, [userName, password]);
+  }, [userName, password, confirmPassword]);
 
   return (
-    <div className="login-form-conteiner">
-      <div className="form-title">Sign In</div>
+    <div className="register-form-conteiner">
+      <div className="form-title">Sign Up</div>
       <div className="form">
         <form onSubmit={handleSubmit}>
           <div className="input-container">
             <label>Username </label>
             <input
               type="text"
+              onChange={handleChangeUserName}
               value={userName}
               required
-              onChange={handleChangeUserName}
             />
             <div className="error">{userNameValidationError}</div>
           </div>
@@ -88,11 +105,22 @@ const Login = () => {
             <label>Password </label>
             <input
               type="password"
+              onChange={handleChangePassword}
               value={password}
               required
-              onChange={handleChangePassword}
             />
             <div className="error">{passwordValidationError}</div>
+          </div>
+
+          <div className="input-container">
+            <label>Confirm Password </label>
+            <input
+              type="password"
+              onChange={handleChangeConfirmPassword}
+              value={confirmPassword}
+              required
+            />
+            <div className="error">{passwordConfirmError}</div>
           </div>
 
           <div className="error">{error}</div>
@@ -100,7 +128,7 @@ const Login = () => {
           <div className="button-container">
             <input
               type="submit"
-              value="Login"
+              value="Register"
               disabled={!formValidationResult}
             />
           </div>
@@ -110,4 +138,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

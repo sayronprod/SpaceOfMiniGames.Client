@@ -19,7 +19,7 @@ const Layout = () => {
           <Room />
         </div>
       </div>
-      <div className="middle" style={{ backgroundColor: "red" }}>
+      <div className="middle">
         <Outlet />
       </div>
     </div>

@@ -19,8 +19,8 @@ const initialState: UserState = {
   error: null,
 };
 
-export const tokenSlice = createSlice({
-  name: "token",
+export const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
     loginUserStarting(state) {
@@ -45,7 +45,25 @@ export const tokenSlice = createSlice({
       state.userInfo = null;
       state.userToken = null;
     },
+    registerUserStarting(state) {
+      state.isLoading = true;
+    },
+    registerUserEnd(state, action: PayloadAction<IUserRegisterResponse>) {
+      state.isLoading = false;
+      const tokenInfo: ITokenInfo = {
+        token: action.payload.token,
+        expired: action.payload.expired,
+      };
+      state.userToken = tokenInfo;
+      state.error = null;
+      state.userInfo = action.payload.userInfo;
+    },
+    registerUserError(state, action: PayloadAction<string>) {
+      state.isLoading = false;
+      state.error = action.payload;
+      state.userInfo = null;
+    },
   },
 });
 
-export default tokenSlice.reducer;
+export default userSlice.reducer;
