@@ -5,6 +5,7 @@ interface UserState {
   userInfo: IUserInfo | null;
   isLoading: boolean;
   error: string | null;
+  isConnected: boolean;
 }
 
 let userTokenString = localStorage.getItem("userToken");
@@ -17,6 +18,7 @@ const initialState: UserState = {
   userInfo: persistedInfoToken,
   isLoading: false,
   error: null,
+  isConnected: false,
 };
 
 export const userSlice = createSlice({
@@ -62,6 +64,9 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
       state.userInfo = null;
+    },
+    setConnectionStatus(state, action: PayloadAction<boolean>) {
+      state.isConnected = action.payload;
     },
   },
 });

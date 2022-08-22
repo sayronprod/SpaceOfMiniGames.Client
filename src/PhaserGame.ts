@@ -18,5 +18,5 @@ export const defaultGameConfig: Phaser.Types.Core.GameConfig = {
       gravity: { y: 200 },
     },
   },
-  disableContextMenu: true,
+  disableContextMenu: false,
 };

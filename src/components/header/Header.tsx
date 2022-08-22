@@ -26,6 +26,9 @@ const Header = () => {
         <ul>
           {checkToken(userToken) ? (
             <>
+              <li className="right-li">
+                <Link to="/Manage">Manage</Link>
+              </li>
               <li
                 className="right-li"
                 onClick={() => {
@@ -34,17 +37,14 @@ const Header = () => {
               >
                 <Link to="/">Sign Out</Link>
               </li>
-              <li className="right-li">
-                <Link to="/Manage">Manage</Link>
-              </li>
             </>
           ) : (
             <>
               <li className="right-li">
-                <Link to="/Login">Login</Link>
+                <Link to="/Register">Register</Link>
               </li>
               <li className="right-li">
-                <Link to="/Register">Register</Link>
+                <Link to="/Login">Login</Link>
               </li>
             </>
           )}

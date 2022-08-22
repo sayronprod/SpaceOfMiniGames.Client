@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@microsoft/signalr": "^6.0.8",
     "@reduxjs/toolkit": "^1.8.4",
     "@types/node": "^18.6.4",
     "@types/react": "^18.0.15",
