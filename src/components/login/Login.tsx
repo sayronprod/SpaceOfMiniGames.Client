@@ -34,30 +34,6 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const validateForm = () => {
-    let result = true;
-
-    if (userName.length > 50) {
-      result = false;
-      setUserNameValidationError("Max lenght 50");
-    } else if (userName.length < 1) {
-      result = false;
-    } else {
-      setUserNameValidationError("");
-    }
-
-    if (password.length > 50) {
-      result = false;
-      setPasswordValidationError("Max lenght 50");
-    } else if (password.length < 1) {
-      result = false;
-    } else {
-      setPasswordValidationError("");
-    }
-
-    setFormValidationResult(result);
-  };
-
   useEffect(() => {
     if (userToken) {
       navigate("/");
@@ -65,6 +41,29 @@ const Login = () => {
   });
 
   useEffect(() => {
+    const validateForm = () => {
+      let result = true;
+
+      if (userName.length > 50) {
+        result = false;
+        setUserNameValidationError("Max lenght 50");
+      } else if (userName.length < 1) {
+        result = false;
+      } else {
+        setUserNameValidationError("");
+      }
+
+      if (password.length > 50) {
+        result = false;
+        setPasswordValidationError("Max lenght 50");
+      } else if (password.length < 1) {
+        result = false;
+      } else {
+        setPasswordValidationError("");
+      }
+
+      setFormValidationResult(result);
+    };
     validateForm();
   }, [userName, password]);
 

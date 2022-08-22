@@ -12,38 +12,44 @@ const Header = () => {
 
   return (
     <div className="navbar">
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/Games">Games</Link>
-        </li>
-        {checkToken(userToken) ? (
-          <>
-            <li
-              className="right-li"
-              onClick={() => {
-                dispatch(clearToken());
-              }}
-            >
-              <Link to="/">Sign Out</Link>
-            </li>
-            <li className="right-li">
-              <Link to="/Manage">Manage</Link>
-            </li>
-          </>
-        ) : (
-          <>
-            <li className="right-li">
-              <Link to="/Login">Login</Link>
-            </li>
-            <li className="right-li">
-              <Link to="/Register">Register</Link>
-            </li>
-          </>
-        )}
-      </ul>
+      <div className="navbar-left">
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/Games">Games</Link>
+          </li>
+        </ul>
+      </div>
+      <div className="navbar-right">
+        <ul>
+          {checkToken(userToken) ? (
+            <>
+              <li
+                className="right-li"
+                onClick={() => {
+                  dispatch(clearToken());
+                }}
+              >
+                <Link to="/">Sign Out</Link>
+              </li>
+              <li className="right-li">
+                <Link to="/Manage">Manage</Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="right-li">
+                <Link to="/Login">Login</Link>
+              </li>
+              <li className="right-li">
+                <Link to="/Register">Register</Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
     </div>
   );
 };

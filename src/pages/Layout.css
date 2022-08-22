@@ -1,10 +1,3 @@
-/* Style the header */
-.header {
-  grid-area: header;
-  background-color: #f1f1f1;
-  text-align: center;
-}
-
 /* The grid container */
 .grid-container {
   display: grid;
@@ -12,7 +5,16 @@
     "header header header header header header"
     "left middle middle middle middle middle";
   grid-template-rows: auto 95%;
+  grid-template-columns: 260px auto;
   height: 100vh;
+}
+
+/* Style the header */
+.header {
+  grid-area: header;
+  background-color: #f1f1f1;
+  text-align: center;
+  height: 100%;
 }
 
 .left,

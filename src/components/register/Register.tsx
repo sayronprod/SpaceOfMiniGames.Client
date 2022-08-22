@@ -41,40 +41,6 @@ const Register = () => {
     setConfirmPassword(e.target.value);
   };
 
-  const validateForm = () => {
-    let result = true;
-
-    if (userName.length > 50) {
-      result = false;
-      setUserNameValidationError("Max lenght 50");
-    } else if (userName.length < 1) {
-      result = false;
-    } else {
-      setUserNameValidationError("");
-    }
-
-    if (password.length > 50) {
-      result = false;
-      setPasswordValidationError("Max lenght 50");
-    } else if (password.length < 1) {
-      result = false;
-    } else {
-      setPasswordValidationError("");
-    }
-
-    if (confirmPassword != "" && confirmPassword != password) {
-      result = false;
-      setPasswordConfirmError("Passwords do not match");
-    } else if (confirmPassword == "") {
-      result = false;
-      setPasswordConfirmError("");
-    } else {
-      setPasswordConfirmError("");
-    }
-
-    setFormValidationResult(result);
-  };
-
   useEffect(() => {
     if (userToken) {
       navigate("/");
@@ -82,6 +48,39 @@ const Register = () => {
   });
 
   useEffect(() => {
+    const validateForm = () => {
+      let result = true;
+
+      if (userName.length > 50) {
+        result = false;
+        setUserNameValidationError("Max lenght 50");
+      } else if (userName.length < 1) {
+        result = false;
+      } else {
+        setUserNameValidationError("");
+      }
+
+      if (password.length > 50) {
+        result = false;
+        setPasswordValidationError("Max lenght 50");
+      } else if (password.length < 1) {
+        result = false;
+      } else {
+        setPasswordValidationError("");
+      }
+
+      if (confirmPassword !== "" && confirmPassword !== password) {
+        result = false;
+        setPasswordConfirmError("Passwords do not match");
+      } else if (confirmPassword === "") {
+        result = false;
+        setPasswordConfirmError("");
+      } else {
+        setPasswordConfirmError("");
+      }
+
+      setFormValidationResult(result);
+    };
     validateForm();
   }, [userName, password, confirmPassword]);
 

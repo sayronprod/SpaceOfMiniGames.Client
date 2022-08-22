@@ -1,15 +1,16 @@
 import Phaser from "phaser";
 
-import HelloWorldScene from "./scenes/HelloWorldScene";
+export const BaseWidth = 1920;
+export const BaseHeight = 1080;
 
-const config: Phaser.Types.Core.GameConfig = {
+export const defaultGameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   parent: "phaser-container",
   backgroundColor: "#282c34",
   scale: {
-    mode: Phaser.Scale.ScaleModes.WIDTH_CONTROLS_HEIGHT,
-    width: window.innerWidth,
-    height: window.innerHeight,
+    mode: Phaser.Scale.ScaleModes.FIT,
+    width: BaseWidth,
+    height: BaseHeight,
   },
   physics: {
     default: "arcade",
@@ -17,7 +18,5 @@ const config: Phaser.Types.Core.GameConfig = {
       gravity: { y: 200 },
     },
   },
-  scene: [HelloWorldScene],
+  disableContextMenu: true,
 };
-
-export default new Phaser.Game(config);
